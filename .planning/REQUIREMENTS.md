@@ -82,27 +82,27 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| COMP-01 | — | Pending |
-| COMP-02 | — | Pending |
-| COMP-03 | — | Pending |
-| COMP-04 | — | Pending |
-| PREV-01 | — | Pending |
-| PREV-02 | — | Pending |
-| TRAN-01 | — | Pending |
-| TRAN-02 | — | Pending |
-| TRAN-03 | — | Pending |
-| TIME-01 | — | Pending |
-| TIME-02 | — | Pending |
-| EXPO-01 | — | Pending |
-| EXPO-02 | — | Pending |
-| EXPO-03 | — | Pending |
-| EXPO-04 | — | Pending |
+| COMP-01 | Phase 1 | Pending |
+| COMP-02 | Phase 3 | Pending |
+| COMP-03 | Phase 1 | Pending |
+| COMP-04 | Phase 1 | Pending |
+| PREV-01 | Phase 1 | Pending |
+| PREV-02 | Phase 1 | Pending |
+| TRAN-01 | Phase 2 | Pending |
+| TRAN-02 | Phase 3 | Pending |
+| TRAN-03 | Phase 3 | Pending |
+| TIME-01 | Phase 2 | Pending |
+| TIME-02 | Phase 2 | Pending |
+| EXPO-01 | Phase 2 | Pending |
+| EXPO-02 | Phase 2 | Pending |
+| EXPO-03 | Phase 2 | Pending |
+| EXPO-04 | Phase 2 | Pending |
 
 **Coverage:**
 - v1 requirements: 15 total
-- Mapped to phases: 0 (populated by roadmapper)
-- Unmapped: 15 ⚠️
+- Mapped to phases: 15
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-02-26*
-*Last updated: 2026-02-26 after initial definition*
+*Last updated: 2026-02-26 after roadmap creation*
