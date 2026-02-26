@@ -28,7 +28,13 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. User can delete a frame and it is removed from the sequence without affecting other frames
   4. User can play and pause the animated preview to see what the GIF will look like
   5. User can toggle loop on/off in the preview player and the animation behavior changes accordingly
-**Plans**: TBD
+**Plans**: 4 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Scaffold project + type definitions + Zustand store + shared renderTick renderer
+- [ ] 01-02-PLAN.md — DropZone upload component + FrameGrid + FrameThumbnail + EditPanel
+- [ ] 01-03-PLAN.md — useAnimationLoop hook + PreviewPlayer canvas animation
+- [ ] 01-04-PLAN.md — App layout wiring + visual verification checkpoint
 
 ### Phase 2: Export and Settings
 **Goal**: Users can configure output settings and export a high-quality GIF that downloads to their machine
@@ -60,6 +66,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Upload and Preview | 0/TBD | Not started | - |
+| 1. Upload and Preview | 0/4 | Not started | - |
 | 2. Export and Settings | 0/TBD | Not started | - |
 | 3. Title Cards and Transitions | 0/TBD | Not started | - |
