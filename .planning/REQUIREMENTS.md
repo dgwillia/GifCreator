@@ -9,15 +9,15 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Frame Composition
 
-- [ ] **COMP-01**: User can upload multiple images via drag-and-drop (PNG, JPG, WebP accepted)
+- [x] **COMP-01**: User can upload multiple images via drag-and-drop (PNG, JPG, WebP accepted)
 - [ ] **COMP-02**: User can add title card frames with a custom solid background color and text
-- [ ] **COMP-03**: User can reorder frames via drag-and-drop in the frame strip
-- [ ] **COMP-04**: User can delete individual frames from the sequence
+- [x] **COMP-03**: User can reorder frames via drag-and-drop in the frame strip
+- [x] **COMP-04**: User can delete individual frames from the sequence
 
 ### Preview
 
-- [ ] **PREV-01**: User can preview the animated GIF sequence with play and pause controls
-- [ ] **PREV-02**: User can toggle loop on/off in the preview player
+- [x] **PREV-01**: User can preview the animated GIF sequence with play and pause controls
+- [x] **PREV-02**: User can toggle loop on/off in the preview player
 
 ### Transitions
 
@@ -82,12 +82,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| COMP-01 | Phase 1 | Pending |
+| COMP-01 | Phase 1 | Complete |
 | COMP-02 | Phase 3 | Pending |
-| COMP-03 | Phase 1 | Pending |
-| COMP-04 | Phase 1 | Pending |
-| PREV-01 | Phase 1 | Pending |
-| PREV-02 | Phase 1 | Pending |
+| COMP-03 | Phase 1 | Complete |
+| COMP-04 | Phase 1 | Complete |
+| PREV-01 | Phase 1 | Complete |
+| PREV-02 | Phase 1 | Complete |
 | TRAN-01 | Phase 2 | Pending |
 | TRAN-02 | Phase 3 | Pending |
 | TRAN-03 | Phase 3 | Pending |

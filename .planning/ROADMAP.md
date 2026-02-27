@@ -31,7 +31,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 4 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Scaffold project + type definitions + Zustand store + shared renderTick renderer
+- [x] 01-01-PLAN.md — Scaffold project + type definitions + Zustand store + shared renderTick renderer
 - [ ] 01-02-PLAN.md — DropZone upload component + FrameGrid + FrameThumbnail + EditPanel
 - [ ] 01-03-PLAN.md — useAnimationLoop hook + PreviewPlayer canvas animation
 - [ ] 01-04-PLAN.md — App layout wiring + visual verification checkpoint
@@ -66,6 +66,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Upload and Preview | 0/4 | Not started | - |
+| 1. Upload and Preview | 1/4 | In Progress | - |
 | 2. Export and Settings | 0/TBD | Not started | - |
 | 3. Title Cards and Transitions | 0/TBD | Not started | - |
