@@ -12,7 +12,7 @@ Three phases deliver the complete v1 product. Phase 1 establishes the core loop:
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Upload and Preview** - Users can upload images, arrange them into a frame sequence, and preview the animation
+- [x] **Phase 1: Upload and Preview** - Users can upload images, arrange them into a frame sequence, and preview the animation
 - [ ] **Phase 2: Export and Settings** - Users can export a high-quality GIF with resolution presets, timing controls, and progress feedback
 - [ ] **Phase 3: Title Cards and Transitions** - Users can add text frames and smooth transitions to complete the portfolio-focused feature set
 
@@ -32,9 +32,9 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 Plans:
 - [x] 01-01-PLAN.md — Scaffold project + type definitions + Zustand store + shared renderTick renderer
-- [ ] 01-02-PLAN.md — DropZone upload component + FrameGrid + FrameThumbnail + EditPanel
-- [ ] 01-03-PLAN.md — useAnimationLoop hook + PreviewPlayer canvas animation
-- [ ] 01-04-PLAN.md — App layout wiring + visual verification checkpoint
+- [x] 01-02-PLAN.md — DropZone upload component + FrameGrid + FrameThumbnail + EditPanel
+- [x] 01-03-PLAN.md — useAnimationLoop hook + PreviewPlayer canvas animation
+- [x] 01-04-PLAN.md — App layout wiring + visual verification checkpoint
 
 ### Phase 2: Export and Settings
 **Goal**: Users can configure output settings and export a high-quality GIF that downloads to their machine
@@ -66,6 +66,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Upload and Preview | 3/4 | In Progress|  |
+| 1. Upload and Preview | 4/4 | Complete | 2026-02-27 |
 | 2. Export and Settings | 0/TBD | Not started | - |
 | 3. Title Cards and Transitions | 0/TBD | Not started | - |
