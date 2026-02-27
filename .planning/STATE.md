@@ -1,3 +1,16 @@
+---
+gsd_state_version: 1.0
+milestone: v1.0
+milestone_name: milestone
+status: unknown
+last_updated: "2026-02-27T13:49:13.422Z"
+progress:
+  total_phases: 1
+  completed_phases: 0
+  total_plans: 4
+  completed_plans: 3
+---
+
 # Project State
 
 ## Project Reference
@@ -10,30 +23,31 @@ See: .planning/PROJECT.md (updated 2026-02-26)
 ## Current Position
 
 Phase: 1 of 3 (Upload and Preview)
-Plan: 1 of 4 in current phase
+Plan: 3 of 4 in current phase
 Status: In progress
-Last activity: 2026-02-27 — Plan 01-01 complete (project scaffold and foundation)
+Last activity: 2026-02-27 — Plan 01-03 complete (useAnimationLoop hook and PreviewPlayer component)
 
-Progress: [█░░░░░░░░░] 8%
+Progress: [███░░░░░░░] 25%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 1
-- Average duration: 3 min
-- Total execution time: 3 min
+- Total plans completed: 3
+- Average duration: 2 min
+- Total execution time: 5 min
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01-upload-and-preview | 1/4 | 3 min | 3 min |
+| 01-upload-and-preview | 3/4 | 5 min | 2 min |
 
 **Recent Trend:**
 - Last 5 plans: 3 min
 - Trend: —
 
 *Updated after each plan completion*
+| Phase 01-upload-and-preview P02 | 4 | 3 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -48,6 +62,9 @@ Recent decisions affecting current work:
 - 01-01: Tailwind v4 configured via @tailwindcss/vite plugin only — no tailwind.config.js or postcss.config.js
 - 01-01: renderTick signature locked for Phase 1/2 contract — (ctx, frame, width, height, progress?) must not change
 - 01-01: progress parameter in renderTick void-suppressed in Phase 1 to avoid TS unused-variable warning
+- 01-03: renderTick called from shared renderer path in PreviewPlayer — no inline canvas drawing (preserves Phase 2 encoder contract)
+- 01-03: rAF lifecycle owned entirely by useAnimationLoop hook (cleanup on unmount prevents CPU leak)
+- 01-03: Refs pattern (framesRef, settingsRef, tickRef) avoids stale closures without restarting loop on state changes
 
 ### Pending Todos
 
@@ -62,5 +79,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-02-27
-Stopped at: Completed 01-01-PLAN.md (project scaffold, type system, store, renderTick)
+Stopped at: Completed 01-03-PLAN.md (useAnimationLoop hook and PreviewPlayer canvas component)
 Resume file: None
