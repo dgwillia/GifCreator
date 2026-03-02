@@ -13,6 +13,7 @@ import { DropZone } from './components/DropZone';
 import { FrameGrid } from './components/FrameGrid';
 import { PreviewPlayer } from './components/PreviewPlayer';
 import { EditPanel } from './components/EditPanel';
+import { ExportPanel } from './components/ExportPanel';
 
 export function App() {
   const frames = useFrameStore((s) => s.frames);
@@ -57,9 +58,11 @@ export function App() {
           <PreviewPlayer />
         </main>
 
-        {/* Right: edit panel */}
-        <div className="shrink-0 border-l border-gray-800 p-4">
+        {/* Right: edit panel + export settings */}
+        <div className="shrink-0 border-l border-gray-800 p-4 flex flex-col gap-6 overflow-y-auto">
           <EditPanel />
+          <div className="border-t border-gray-800" />
+          <ExportPanel />
         </div>
       </div>
     </div>
