@@ -1,10 +1,13 @@
 // src/components/ExportPanel.tsx
 // Export settings panel — resolution, frame duration, loop, transition, file size estimate, export button.
-// Export button is a no-op stub in Phase 2; Plan 03 wires the GIF worker.
+// Plan 03: handleExport renders frames to OffscreenCanvas, posts RGBA buffers to GIF worker, triggers download.
 
 import { useFrameStore } from '../store/useFrameStore';
 import { RESOLUTION_PRESETS } from '../types/frames';
 import { Download, Loader2 } from 'lucide-react';
+import GifWorker from '../workers/gifWorker.ts?worker';
+import type { WorkerOutgoing } from '../workers/gifWorker.types';
+import { renderTick } from '../renderer/renderTick';
 
 export function ExportPanel() {
   const { frames, settings, updateSettings, exportProgress } = useFrameStore();
@@ -34,9 +37,72 @@ export function ExportPanel() {
     updateSettings({ transitionType: e.target.value as 'cut' });
   }
 
-  // Plan 03 replaces this stub with the actual GIF worker call
-  function handleExport() {
-    // No-op in Phase 2 — wired in Plan 03
+  async function handleExport() {
+    // Feature detection: OffscreenCanvas required for export
+    if (typeof OffscreenCanvas === 'undefined') {
+      alert('Export requires a modern browser. Please update Safari to version 17 or use Chrome/Firefox.');
+      return;
+    }
+
+    const { frames, settings, setExportProgress } = useFrameStore.getState();
+    if (frames.length === 0) return;
+
+    const { outputWidth, outputHeight } = settings;
+
+    // Render all frames to RGBA ImageData at output resolution on the main thread.
+    // We use a scratch OffscreenCanvas here — NOT the preview canvas.
+    // CRITICAL: Do NOT transfer bitmaps to the worker. Render to ImageData and
+    // transfer the ArrayBuffer instead. Transferring bitmaps detaches them from
+    // the main thread and breaks the preview player.
+    const canvas = new OffscreenCanvas(outputWidth, outputHeight);
+    const ctx = canvas.getContext('2d')!;
+    const frameData: ArrayBuffer[] = [];
+
+    for (const frame of frames) {
+      renderTick(ctx, frame, outputWidth, outputHeight);
+      const imageData = ctx.getImageData(0, 0, outputWidth, outputHeight);
+      // slice(0) copies the buffer — preview bitmaps stay on main thread
+      frameData.push(imageData.data.buffer.slice(0));
+    }
+
+    // Set initial progress state (0%)
+    setExportProgress(0);
+
+    const worker = new GifWorker();
+
+    worker.onmessage = (e: MessageEvent<WorkerOutgoing>) => {
+      if (e.data.type === 'progress') {
+        const pct = Math.round((e.data.frame / e.data.total) * 100);
+        setExportProgress(pct);
+      } else if (e.data.type === 'done') {
+        // Trigger browser download
+        // Cast via ArrayBuffer to satisfy Blob constructor's BlobPart type constraint
+        const blob = new Blob([e.data.bytes.buffer as ArrayBuffer], { type: 'image/gif' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'animation.gif';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url); // Revoke immediately — browser has started download
+
+        worker.terminate();
+        setExportProgress(null); // Return to idle
+      } else if (e.data.type === 'error') {
+        console.error('GIF encode failed:', e.data.message);
+        worker.terminate();
+        setExportProgress(null);
+        alert(`Export failed: ${e.data.message}`);
+      }
+    };
+
+    // Post the pre-rendered RGBA buffers + settings to the worker.
+    // Transfer the frameData ArrayBuffers (zero-copy) — these are copies, not originals.
+    worker.postMessage(
+      { type: 'encode', frameData, width: outputWidth, height: outputHeight, settings },
+      frameData, // Transfer list — zero-copy transfer of the copied buffers
+    );
   }
 
   // Estimated file size calculation (from RESEARCH.md Pattern 7)

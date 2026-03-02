@@ -51,7 +51,8 @@ self.onmessage = (e: MessageEvent<WorkerIncoming>) => {
 
     // Transfer the buffer zero-copy back to main thread (encoder bytes are done — no further use)
     const doneMsg: WorkerOutgoing = { type: 'done', bytes };
-    self.postMessage(doneMsg, [bytes.buffer]);
+    // Use options form for transfer list — compatible with both Window and DedicatedWorkerGlobalScope types
+    self.postMessage(doneMsg, { transfer: [bytes.buffer] });
 
   } catch (err) {
     const errorMsg: WorkerOutgoing = {
