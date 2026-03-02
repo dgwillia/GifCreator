@@ -73,5 +73,5 @@ Phases execute in numeric order: 1 → 2 → 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Upload and Preview | 4/4 | Complete | 2026-02-27 |
-| 2. Export and Settings | 2/4 | In Progress|  |
+| 2. Export and Settings | 3/4 | In Progress|  |
 | 3. Title Cards and Transitions | 0/TBD | Not started | - |

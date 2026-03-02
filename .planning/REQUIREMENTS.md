@@ -34,8 +34,8 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [x] **EXPO-01**: User can select output resolution from presets: 1200×900, 800×600, 1:1 (1080×1080), 16:9 (1280×720)
 - [x] **EXPO-02**: User can export a high-quality GIF using per-frame color palette quantization and Floyd-Steinberg dithering
-- [ ] **EXPO-03**: User can see export encoding progress while the GIF is being generated
-- [ ] **EXPO-04**: User can see estimated file size before triggering export
+- [x] **EXPO-03**: User can see export encoding progress while the GIF is being generated
+- [x] **EXPO-04**: User can see estimated file size before triggering export
 
 ## v2 Requirements
 
@@ -95,8 +95,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TIME-02 | Phase 2 | Complete |
 | EXPO-01 | Phase 2 | Complete |
 | EXPO-02 | Phase 2 | Complete |
-| EXPO-03 | Phase 2 | Pending |
-| EXPO-04 | Phase 2 | Pending |
+| EXPO-03 | Phase 2 | Complete |
+| EXPO-04 | Phase 2 | Complete |
 
 **Coverage:**
 - v1 requirements: 15 total
