@@ -10,19 +10,26 @@ interface FrameStore {
   frames: Frame[];
   settings: GifSettings;
   selectedId: string | null;
+  exportProgress: number | null;   // null = idle, 0–100 = encoding in progress
   addFrames: (frames: Frame[]) => void;
   removeFrame: (id: string) => void;
   reorderFrames: (activeId: string, overId: string) => void;
   setSelectedId: (id: string | null) => void;
   toggleLoop: () => void;
+  updateSettings: (patch: Partial<GifSettings>) => void;
+  setExportProgress: (v: number | null) => void;
 }
 
 export const useFrameStore = create<FrameStore>((set) => ({
   frames: [],
   selectedId: null,
+  exportProgress: null,
   settings: {
     frameDurationMs: 800,
     loop: true,
+    outputWidth: 800,
+    outputHeight: 600,
+    transitionType: 'cut' as const,
   },
 
   addFrames: (newFrames) =>
@@ -55,4 +62,9 @@ export const useFrameStore = create<FrameStore>((set) => ({
     set((state) => ({
       settings: { ...state.settings, loop: !state.settings.loop },
     })),
+
+  updateSettings: (patch) =>
+    set((state) => ({ settings: { ...state.settings, ...patch } })),
+
+  setExportProgress: (v) => set({ exportProgress: v }),
 }));
