@@ -46,7 +46,13 @@ Plans:
   3. User can toggle whether the exported GIF loops forever or plays once
   4. User can see an estimated file size before triggering export
   5. User can click export, watch a progress indicator during encoding, and receive a downloaded GIF file
-**Plans**: TBD
+**Plans**: 4 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — Extend GifSettings type + Zustand store + Floyd-Steinberg dither utility
+- [ ] 02-02-PLAN.md — ExportPanel UI (resolution, duration, loop, transition, file size estimate)
+- [ ] 02-03-PLAN.md — GIF Web Worker encoder + handleExport wiring + browser download
+- [ ] 02-04-PLAN.md — Visual and functional verification checkpoint
 
 ### Phase 3: Title Cards and Transitions
 **Goal**: Users can add text title card frames and choose smooth transitions between frames, completing the portfolio-differentiating feature set
@@ -67,5 +73,5 @@ Phases execute in numeric order: 1 → 2 → 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Upload and Preview | 4/4 | Complete | 2026-02-27 |
-| 2. Export and Settings | 0/TBD | Not started | - |
+| 2. Export and Settings | 0/4 | Not started | - |
 | 3. Title Cards and Transitions | 0/TBD | Not started | - |
