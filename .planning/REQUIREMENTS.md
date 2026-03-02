@@ -21,19 +21,19 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Transitions
 
-- [ ] **TRAN-01**: User can select cut (instant) transition between frames
+- [x] **TRAN-01**: User can select cut (instant) transition between frames
 - [ ] **TRAN-02**: User can select crossfade (alpha blend) transition between frames
 - [ ] **TRAN-03**: User can select slide left or slide right transition between frames
 
 ### Timing
 
-- [ ] **TIME-01**: User can set a global frame duration that applies to all frames
-- [ ] **TIME-02**: User can toggle whether the exported GIF loops forever or plays once
+- [x] **TIME-01**: User can set a global frame duration that applies to all frames
+- [x] **TIME-02**: User can toggle whether the exported GIF loops forever or plays once
 
 ### Export
 
-- [ ] **EXPO-01**: User can select output resolution from presets: 1200×900, 800×600, 1:1 (1080×1080), 16:9 (1280×720)
-- [ ] **EXPO-02**: User can export a high-quality GIF using per-frame color palette quantization and Floyd-Steinberg dithering
+- [x] **EXPO-01**: User can select output resolution from presets: 1200×900, 800×600, 1:1 (1080×1080), 16:9 (1280×720)
+- [x] **EXPO-02**: User can export a high-quality GIF using per-frame color palette quantization and Floyd-Steinberg dithering
 - [ ] **EXPO-03**: User can see export encoding progress while the GIF is being generated
 - [ ] **EXPO-04**: User can see estimated file size before triggering export
 
@@ -88,13 +88,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 | COMP-04 | Phase 1 | Complete |
 | PREV-01 | Phase 1 | Complete |
 | PREV-02 | Phase 1 | Complete |
-| TRAN-01 | Phase 2 | Pending |
+| TRAN-01 | Phase 2 | Complete |
 | TRAN-02 | Phase 3 | Pending |
 | TRAN-03 | Phase 3 | Pending |
-| TIME-01 | Phase 2 | Pending |
-| TIME-02 | Phase 2 | Pending |
-| EXPO-01 | Phase 2 | Pending |
-| EXPO-02 | Phase 2 | Pending |
+| TIME-01 | Phase 2 | Complete |
+| TIME-02 | Phase 2 | Complete |
+| EXPO-01 | Phase 2 | Complete |
+| EXPO-02 | Phase 2 | Complete |
 | EXPO-03 | Phase 2 | Pending |
 | EXPO-04 | Phase 2 | Pending |
 
