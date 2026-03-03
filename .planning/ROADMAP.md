@@ -13,7 +13,7 @@ Three phases deliver the complete v1 product. Phase 1 establishes the core loop:
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Upload and Preview** - Users can upload images, arrange them into a frame sequence, and preview the animation
-- [ ] **Phase 2: Export and Settings** - Users can export a high-quality GIF with resolution presets, timing controls, and progress feedback
+- [x] **Phase 2: Export and Settings** - Users can export a high-quality GIF with resolution presets, timing controls, and progress feedback
 - [ ] **Phase 3: Title Cards and Transitions** - Users can add text frames and smooth transitions to complete the portfolio-focused feature set
 
 ## Phase Details
@@ -49,10 +49,10 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Extend GifSettings type + Zustand store + Floyd-Steinberg dither utility
-- [ ] 02-02-PLAN.md — ExportPanel UI (resolution, duration, loop, transition, file size estimate)
-- [ ] 02-03-PLAN.md — GIF Web Worker encoder + handleExport wiring + browser download
-- [ ] 02-04-PLAN.md — Visual and functional verification checkpoint
+- [x] 02-01-PLAN.md — Extend GifSettings type + Zustand store + Floyd-Steinberg dither utility
+- [x] 02-02-PLAN.md — ExportPanel UI (resolution, duration, loop, transition, file size estimate)
+- [x] 02-03-PLAN.md — GIF Web Worker encoder + handleExport wiring + browser download
+- [x] 02-04-PLAN.md — Visual and functional verification checkpoint
 
 ### Phase 3: Title Cards and Transitions
 **Goal**: Users can add text title card frames and choose smooth transitions between frames, completing the portfolio-differentiating feature set
@@ -73,5 +73,5 @@ Phases execute in numeric order: 1 → 2 → 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Upload and Preview | 4/4 | Complete | 2026-02-27 |
-| 2. Export and Settings | 3/4 | In Progress|  |
+| 2. Export and Settings | 4/4 | Complete | 2026-03-03 |
 | 3. Title Cards and Transitions | 0/TBD | Not started | - |
