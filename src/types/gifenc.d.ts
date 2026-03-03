@@ -7,8 +7,12 @@ declare module 'gifenc' {
     auto?: boolean;
   }
 
+  // Palette as returned by quantize(): an array of [r, g, b] sub-arrays.
+  // NOT a flat Uint8Array — the actual runtime format is Array<[number, number, number]>.
+  export type RGBPalette = [number, number, number][];
+
   export interface WriteFrameOptions {
-    palette?: Uint8Array;
+    palette?: RGBPalette;
     delay?: number;
     repeat?: number;
     transparent?: number;
@@ -34,9 +38,10 @@ declare module 'gifenc' {
 
   export function GIFEncoder(opts?: GIFEncoderOptions): GIFEncoderInstance;
 
-  export function quantize(data: Uint8ClampedArray, maxColors: number, opts?: object): Uint8Array;
+  // Returns Array<[r, g, b]> — NOT a flat Uint8Array.
+  export function quantize(data: Uint8ClampedArray | Uint8Array, maxColors: number, opts?: object): RGBPalette;
 
-  export function applyPalette(data: Uint8ClampedArray, palette: Uint8Array, format?: string): Uint8Array;
+  export function applyPalette(data: Uint8ClampedArray | Uint8Array, palette: RGBPalette, format?: string): Uint8Array;
 
   export function nearestColorIndex(palette: Uint8Array, r: number, g: number, b: number, a?: number): number;
 
