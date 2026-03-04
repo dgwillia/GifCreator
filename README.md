@@ -9,7 +9,9 @@ Upload a folder of screenshots, arrange the frames, configure timing and transit
 ## Features
 
 - **Upload & arrange** — drag and drop images, reorder frames freely
-- **Live preview** — play back your sequence before exporting
+- **Title cards** — add text frames with custom background color, text color, and font size
+- **Smooth transitions** — crossfade, slide left, or slide right between frames
+- **Live preview** — play back your sequence with transitions before exporting
 - **Export settings** — choose output resolution from fixed presets, set frame duration, loop control
 - **High-quality output** — client-side GIF encoding with Floyd-Steinberg dithering via [gifenc](https://github.com/mattdesl/gifenc)
 
@@ -43,4 +45,4 @@ Output goes to `dist/`.
 
 - [x] Phase 1 — Upload and preview
 - [x] Phase 2 — Export and settings
-- [ ] Phase 3 — Title cards and transitions
+- [x] Phase 3 — Title cards and transitions
