@@ -64,6 +64,9 @@ export function ExportPanel() {
     const canvas = new OffscreenCanvas(outputWidth, outputHeight);
     const ctx = canvas.getContext('2d')!;
     const frameData: ArrayBuffer[] = [];
+    const frameDelays: number[] = [];
+    // Transition frames use a shorter delay so the full transition spans one content frame duration.
+    const transitionFrameDelay = Math.round(settings.frameDurationMs / (TRANSITION_FRAMES + 1));
 
     for (let i = 0; i < frames.length; i++) {
       const frame = frames[i];
@@ -72,6 +75,7 @@ export function ExportPanel() {
       // Render the content frame
       renderTick(ctx, frame, outputWidth, outputHeight);
       frameData.push(ctx.getImageData(0, 0, outputWidth, outputHeight).data.buffer.slice(0));
+      frameDelays.push(settings.frameDurationMs);
 
       // Insert transition intermediate frames between consecutive pairs
       if (nextFrame && transitionType !== 'cut') {
@@ -79,6 +83,7 @@ export function ExportPanel() {
           const progress = t / (TRANSITION_FRAMES + 1);
           renderTransitionTick(ctx, frame, nextFrame, outputWidth, outputHeight, transitionType, progress);
           frameData.push(ctx.getImageData(0, 0, outputWidth, outputHeight).data.buffer.slice(0));
+          frameDelays.push(transitionFrameDelay);
         }
       }
     }
@@ -118,7 +123,7 @@ export function ExportPanel() {
     // Post the pre-rendered RGBA buffers + settings to the worker.
     // Transfer the frameData ArrayBuffers (zero-copy) — these are copies, not originals.
     worker.postMessage(
-      { type: 'encode', frameData, width: outputWidth, height: outputHeight, settings },
+      { type: 'encode', frameData, width: outputWidth, height: outputHeight, settings, frameDelays },
       frameData, // Transfer list — zero-copy transfer of the copied buffers
     );
   }

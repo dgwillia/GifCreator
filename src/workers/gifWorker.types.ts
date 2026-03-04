@@ -10,6 +10,7 @@ export type WorkerIncoming = {
   width: number;
   height: number;
   settings: GifSettings;
+  frameDelays?: number[];    // Per-frame delay in ms. Falls back to settings.frameDurationMs if absent.
 };
 
 export type WorkerOutgoing =

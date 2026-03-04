@@ -23,8 +23,8 @@ import type { Frame } from '../types/frames';
 const PREVIEW_WIDTH = 640;
 const PREVIEW_HEIGHT = 480;
 
-// A single render call in the expanded playback sequence.
-type ExpandedTick = (ctx: CanvasRenderingContext2D) => void;
+// A single render call in the expanded playback sequence, paired with its display duration.
+type ExpandedTick = { render: (ctx: CanvasRenderingContext2D) => void; duration: number };
 
 export function PreviewPlayer() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -54,29 +54,37 @@ export function PreviewPlayer() {
     transitionTypeRef.current = settings.transitionType;
   });
 
-  // Rebuild expanded sequence whenever frames or transitionType changes
+  // Rebuild expanded sequence whenever frames, transitionType, or frameDurationMs changes
   useEffect(() => {
     const TRANSITION_FRAMES = 4;
     const ticks: ExpandedTick[] = [];
     const transitionType = settings.transitionType;
+    const contentDuration = settings.frameDurationMs;
+    // Transition frames are shorter so the full transition spans one content frame duration.
+    const transitionDuration = Math.round(contentDuration / (TRANSITION_FRAMES + 1));
 
     for (let i = 0; i < frames.length; i++) {
       const frame = frames[i];
       const nextFrame = frames[i + 1];
-      ticks.push((ctx) => renderTick(ctx, frame, PREVIEW_WIDTH, PREVIEW_HEIGHT));
+      ticks.push({
+        render: (ctx) => renderTick(ctx, frame, PREVIEW_WIDTH, PREVIEW_HEIGHT),
+        duration: contentDuration,
+      });
       if (nextFrame && transitionType !== 'cut') {
         for (let t = 1; t <= TRANSITION_FRAMES; t++) {
           const progress = t / (TRANSITION_FRAMES + 1);
-          ticks.push((ctx) =>
-            renderTransitionTick(ctx, frame, nextFrame, PREVIEW_WIDTH, PREVIEW_HEIGHT, transitionType, progress)
-          );
+          ticks.push({
+            render: (ctx) =>
+              renderTransitionTick(ctx, frame, nextFrame, PREVIEW_WIDTH, PREVIEW_HEIGHT, transitionType, progress),
+            duration: transitionDuration,
+          });
         }
       }
     }
     expandedSequenceRef.current = ticks;
     // Clamp frameIndex to new sequence length
     frameIndexRef.current = Math.min(frameIndexRef.current, Math.max(0, ticks.length - 1));
-  }, [frames, settings.transitionType]);
+  }, [frames, settings.transitionType, settings.frameDurationMs]);
 
   const tick = useCallback((timestamp: number) => {
     const canvas = canvasRef.current;
@@ -86,14 +94,15 @@ export function PreviewPlayer() {
     const currentFrames = framesRef.current;
     if (currentFrames.length === 0) return;
 
-    const elapsed = timestamp - lastFrameTimeRef.current;
-    if (elapsed < frameDurationRef.current) return;
-
-    lastFrameTimeRef.current = timestamp;
-
     const sequence = expandedSequenceRef.current;
     if (sequence.length === 0) return;
-    sequence[frameIndexRef.current](ctx);
+
+    const currentTick = sequence[frameIndexRef.current];
+    const elapsed = timestamp - lastFrameTimeRef.current;
+    if (elapsed < currentTick.duration) return;
+
+    lastFrameTimeRef.current = timestamp;
+    currentTick.render(ctx);
 
     const nextIndex = frameIndexRef.current + 1;
     if (nextIndex >= sequence.length) {

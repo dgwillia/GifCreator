@@ -14,7 +14,7 @@ import type { WorkerIncoming, WorkerOutgoing } from './gifWorker.types';
 self.onmessage = (e: MessageEvent<WorkerIncoming>) => {
   if (e.data.type !== 'encode') return;
 
-  const { frameData, width, height, settings } = e.data;
+  const { frameData, width, height, settings, frameDelays } = e.data;
   const { frameDurationMs, loop } = settings;
 
   try {
@@ -47,7 +47,7 @@ self.onmessage = (e: MessageEvent<WorkerIncoming>) => {
       // 5. Write frame
       encoder.writeFrame(index, width, height, {
         palette,
-        delay: frameDurationMs,  // gifenc accepts milliseconds directly
+        delay: frameDelays?.[i] ?? frameDurationMs,  // per-frame delay (transition frames use shorter delay)
         repeat: loop ? 0 : -1,   // 0 = loop forever, -1 = play once (NOT boolean)
       });
 
