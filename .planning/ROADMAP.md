@@ -63,7 +63,13 @@ Plans:
   2. User can select crossfade transition and the preview and exported GIF both show a smooth alpha-blend between frames
   3. User can select slide left or slide right transition and the preview and exported GIF both show the correct directional slide
   4. A GIF exported with title cards and transitions looks visually identical to what the user saw in the preview
-**Plans**: TBD
+**Plans**: 4 plans
+
+Plans:
+- [ ] 03-01-PLAN.md — Type widening + store actions + renderTick TextFrame branch + renderTransitionTick
+- [ ] 03-02-PLAN.md — TextFrameThumbnail + FrameGrid mixed types + EditPanel text controls + Add Title Card button
+- [ ] 03-03-PLAN.md — PreviewPlayer expanded sequence + ExportPanel transition frames + file size estimate
+- [ ] 03-04-PLAN.md — Visual and functional verification checkpoint
 
 ## Progress
 
@@ -74,4 +80,4 @@ Phases execute in numeric order: 1 → 2 → 3
 |-------|----------------|--------|-----------|
 | 1. Upload and Preview | 4/4 | Complete | 2026-02-27 |
 | 2. Export and Settings | 4/4 | Complete | 2026-03-03 |
-| 3. Title Cards and Transitions | 0/TBD | Not started | - |
+| 3. Title Cards and Transitions | 0/4 | In progress | - |
