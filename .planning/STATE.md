@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-last_updated: "2026-03-04T13:38:19.716Z"
+last_updated: "2026-03-04T13:57:59Z"
 progress:
   total_phases: 3
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 12
-  completed_plans: 10
+  completed_plans: 12
 ---
 
 # Project State
@@ -22,12 +22,12 @@ See: .planning/PROJECT.md (updated 2026-02-26)
 
 ## Current Position
 
-Phase: 3 of 3 (Title Cards and Transitions) — IN PROGRESS
-Plan: Phase 3 — Plan 3/N done. Transition pipeline wired into preview and export.
-Status: Phase 3 in progress. Plans 03-01 and 03-03 complete — type contracts, rendering foundation, and transition wiring all done.
-Last activity: 2026-03-04 — Plan 03-03 complete — transitions wired into PreviewPlayer (expanded sequence) and ExportPanel (4 intermediate frames per pair, 4-option selector, corrected size estimate).
+Phase: 3 of 3 (Title Cards and Transitions) — COMPLETE
+Plan: Phase 3 — All 4 plans done. v1.0 milestone complete.
+Status: All phases complete. Phase 3 visual verification passed — title cards, transitions, and exported GIF all confirmed working.
+Last activity: 2026-03-04 — Plan 03-04 complete — Phase 3 visual verification approved by user. v1.0 milestone done.
 
-Progress: [████████░░] 70%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -57,6 +57,7 @@ Progress: [████████░░] 70%
 | Phase 03-title-cards-and-transitions P01 | 2 | 2 tasks | 5 files |
 | Phase 03-title-cards-and-transitions P02 | 2 | 2 tasks | 4 files |
 | Phase 03-title-cards-and-transitions P03 | 4 | 2 tasks | 2 files |
+| Phase 03-title-cards-and-transitions P04 | 0 | 2 tasks (human-verify) | 0 files |
 
 ## Accumulated Context
 
@@ -93,6 +94,8 @@ Recent decisions affecting current work:
 - 03-02: Add Title Card button uses useFrameStore.getState() synchronous read for immediate ID access after addTextFrame (outside React render)
 - [Phase 03-title-cards-and-transitions]: 03-03: Expanded sequence is flat ExpandedTick[] array — uniform sequence[index](ctx) tick with no branching
 - [Phase 03-title-cards-and-transitions]: 03-03: TRANSITION_FRAMES = 4 module-level constant in ExportPanel shared between export loop and size estimate formula
+- 03-04: Phase 3 visual verification complete — all 7 checks passed; per-frame delay array fix in gif.worker.ts aligns exported GIF transition timing with preview animation
+- 03-04: v1.0 milestone achieved — all three phases complete, designer can produce portfolio GIF with title cards and transitions without external tools
 
 ### Pending Todos
 
@@ -107,5 +110,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-04
-Stopped at: Completed 03-03-PLAN.md — transition pipeline wired into PreviewPlayer (expanded sequence) and ExportPanel (frame expansion + 4-option selector + corrected size estimate).
+Stopped at: Completed 03-04-PLAN.md — Phase 3 visual verification approved. v1.0 milestone complete. All phases done.
 Resume file: None

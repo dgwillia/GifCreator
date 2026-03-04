@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Upload and Preview** - Users can upload images, arrange them into a frame sequence, and preview the animation
 - [x] **Phase 2: Export and Settings** - Users can export a high-quality GIF with resolution presets, timing controls, and progress feedback
-- [ ] **Phase 3: Title Cards and Transitions** - Users can add text frames and smooth transitions to complete the portfolio-focused feature set
+- [x] **Phase 3: Title Cards and Transitions** - Users can add text frames and smooth transitions to complete the portfolio-focused feature set
 
 ## Phase Details
 
@@ -66,10 +66,10 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 03-01-PLAN.md — Type widening + store actions + renderTick TextFrame branch + renderTransitionTick
-- [ ] 03-02-PLAN.md — TextFrameThumbnail + FrameGrid mixed types + EditPanel text controls + Add Title Card button
-- [ ] 03-03-PLAN.md — PreviewPlayer expanded sequence + ExportPanel transition frames + file size estimate
-- [ ] 03-04-PLAN.md — Visual and functional verification checkpoint
+- [x] 03-01-PLAN.md — Type widening + store actions + renderTick TextFrame branch + renderTransitionTick
+- [x] 03-02-PLAN.md — TextFrameThumbnail + FrameGrid mixed types + EditPanel text controls + Add Title Card button
+- [x] 03-03-PLAN.md — PreviewPlayer expanded sequence + ExportPanel transition frames + file size estimate
+- [x] 03-04-PLAN.md — Visual and functional verification checkpoint
 
 ## Progress
 
@@ -80,4 +80,4 @@ Phases execute in numeric order: 1 → 2 → 3
 |-------|----------------|--------|-----------|
 | 1. Upload and Preview | 4/4 | Complete | 2026-02-27 |
 | 2. Export and Settings | 4/4 | Complete | 2026-03-03 |
-| 3. Title Cards and Transitions | 3/4 | In Progress|  |
+| 3. Title Cards and Transitions | 4/4 | Complete   | 2026-03-04 |
