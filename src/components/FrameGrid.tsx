@@ -23,7 +23,7 @@ import {
 import { useFrameStore } from '../store/useFrameStore';
 import { FrameThumbnail } from './FrameThumbnail';
 import { FrameThumbnailGhost } from './FrameThumbnailGhost';
-import type { ImageFrame } from '../types/frames';
+import { TextFrameThumbnail } from './TextFrameThumbnail';
 
 export function FrameGrid() {
   const { frames, reorderFrames } = useFrameStore();
@@ -52,11 +52,9 @@ export function FrameGrid() {
     setActiveId(null);
   }
 
-  // image frames only in Phase 1
-  const imageFrames = frames.filter((f): f is ImageFrame => f.type === 'image');
-  const frameIds = imageFrames.map((f) => f.id);
+  const frameIds = frames.map((f) => f.id);
 
-  if (imageFrames.length === 0) {
+  if (frames.length === 0) {
     return null;
   }
 
@@ -69,9 +67,11 @@ export function FrameGrid() {
     >
       <SortableContext items={frameIds} strategy={rectSortingStrategy}>
         <div className="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-3">
-          {imageFrames.map((frame) => (
-            <FrameThumbnail key={frame.id} frame={frame} />
-          ))}
+          {frames.map((frame) =>
+            frame.type === 'image'
+              ? <FrameThumbnail key={frame.id} frame={frame} />
+              : <TextFrameThumbnail key={frame.id} frame={frame} />
+          )}
         </div>
       </SortableContext>
       <DragOverlay dropAnimation={null}>
