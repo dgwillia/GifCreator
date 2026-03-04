@@ -1,6 +1,8 @@
 // src/components/ExportPanel.tsx
 // Export settings panel — resolution, frame duration, loop, transition, file size estimate, export button.
 // Plan 03: handleExport renders frames to OffscreenCanvas, posts RGBA buffers to GIF worker, triggers download.
+// Plan 03-03: Transition frame expansion — 4 intermediate frames generated between each consecutive pair
+//             when transitionType is not 'cut'. File size estimate accounts for expanded frame count.
 
 import { useFrameStore } from '../store/useFrameStore';
 import { RESOLUTION_PRESETS } from '../types/frames';
@@ -9,6 +11,10 @@ import { Download, Loader2 } from 'lucide-react';
 import GifWorker from '../workers/gifWorker.ts?worker';
 import type { WorkerOutgoing } from '../workers/gifWorker.types';
 import { renderTick } from '../renderer/renderTick';
+import { renderTransitionTick } from '../renderer/renderTransitionTick';
+
+// Number of intermediate frames generated per transition pair (crossfade, slide-left, slide-right).
+const TRANSITION_FRAMES = 4;
 
 export function ExportPanel() {
   const { frames, settings, updateSettings, exportProgress } = useFrameStore();
@@ -48,9 +54,9 @@ export function ExportPanel() {
     const { frames, settings, setExportProgress } = useFrameStore.getState();
     if (frames.length === 0) return;
 
-    const { outputWidth, outputHeight } = settings;
+    const { outputWidth, outputHeight, transitionType } = settings;
 
-    // Render all frames to RGBA ImageData at output resolution on the main thread.
+    // Render all frames (+ transition intermediate frames) to RGBA ImageData at output resolution.
     // We use a scratch OffscreenCanvas here — NOT the preview canvas.
     // CRITICAL: Do NOT transfer bitmaps to the worker. Render to ImageData and
     // transfer the ArrayBuffer instead. Transferring bitmaps detaches them from
@@ -59,11 +65,22 @@ export function ExportPanel() {
     const ctx = canvas.getContext('2d')!;
     const frameData: ArrayBuffer[] = [];
 
-    for (const frame of frames) {
+    for (let i = 0; i < frames.length; i++) {
+      const frame = frames[i];
+      const nextFrame = frames[i + 1];
+
+      // Render the content frame
       renderTick(ctx, frame, outputWidth, outputHeight);
-      const imageData = ctx.getImageData(0, 0, outputWidth, outputHeight);
-      // slice(0) copies the buffer — preview bitmaps stay on main thread
-      frameData.push(imageData.data.buffer.slice(0));
+      frameData.push(ctx.getImageData(0, 0, outputWidth, outputHeight).data.buffer.slice(0));
+
+      // Insert transition intermediate frames between consecutive pairs
+      if (nextFrame && transitionType !== 'cut') {
+        for (let t = 1; t <= TRANSITION_FRAMES; t++) {
+          const progress = t / (TRANSITION_FRAMES + 1);
+          renderTransitionTick(ctx, frame, nextFrame, outputWidth, outputHeight, transitionType, progress);
+          frameData.push(ctx.getImageData(0, 0, outputWidth, outputHeight).data.buffer.slice(0));
+        }
+      }
     }
 
     // Set initial progress state (0%)
@@ -106,10 +123,17 @@ export function ExportPanel() {
     );
   }
 
-  // Estimated file size calculation (from RESEARCH.md Pattern 7)
+  // Estimated file size calculation — accounts for transition intermediate frames.
+  // encodedFrameCount = content frames + (transition frames per pair * number of pairs)
+  const encodedFrameCount = !hasFrames
+    ? 0
+    : settings.transitionType === 'cut'
+    ? frames.length
+    : frames.length + Math.max(0, frames.length - 1) * TRANSITION_FRAMES;
+
   const estimatedKb = Math.round(
-    (settings.outputWidth * settings.outputHeight * frames.length * 0.5
-      + frames.length * 768 + 800) / 1024
+    (settings.outputWidth * settings.outputHeight * encodedFrameCount * 0.5
+      + encodedFrameCount * 768 + 800) / 1024
   );
   const displaySize = !hasFrames
     ? '—'
@@ -182,6 +206,9 @@ export function ExportPanel() {
           onChange={handleTransitionChange}
         >
           <option value="cut">Cut (instant)</option>
+          <option value="crossfade">Crossfade</option>
+          <option value="slide-left">Slide Left</option>
+          <option value="slide-right">Slide Right</option>
         </select>
       </div>
 
