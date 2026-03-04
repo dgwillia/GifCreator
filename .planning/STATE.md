@@ -55,6 +55,7 @@ Progress: [████████░░] 70%
 | Phase 02-export-and-settings P03 | 2 | 2 tasks | 4 files |
 | Phase 02-export-and-settings P04 | 0 | 1 task (human-verify) | 0 files |
 | Phase 03-title-cards-and-transitions P01 | 2 | 2 tasks | 5 files |
+| Phase 03-title-cards-and-transitions P02 | 2 | 2 tasks | 4 files |
 | Phase 03-title-cards-and-transitions P03 | 4 | 2 tasks | 2 files |
 
 ## Accumulated Context
@@ -88,6 +89,8 @@ Recent decisions affecting current work:
 - 02-04: Known Safari < 17 limitation accepted — alert instead of export (intentional per research decision)
 - 03-01: transitionType default cast uses GifSettings['transitionType'] instead of 'cut' as const to prevent literal narrowing against the wider union
 - 03-01: renderTransitionTick uses module-level OffscreenCanvas singleton (scratchCanvas) to avoid GC pressure on each transition frame
+- 03-02: FrameGrid uses all frames (not filtered) in SortableContext — supports mixed ImageFrame + TextFrame drag-and-drop
+- 03-02: Add Title Card button uses useFrameStore.getState() synchronous read for immediate ID access after addTextFrame (outside React render)
 - [Phase 03-title-cards-and-transitions]: 03-03: Expanded sequence is flat ExpandedTick[] array — uniform sequence[index](ctx) tick with no branching
 - [Phase 03-title-cards-and-transitions]: 03-03: TRANSITION_FRAMES = 4 module-level constant in ExportPanel shared between export loop and size estimate formula
 
