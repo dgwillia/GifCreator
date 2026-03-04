@@ -1,18 +1,19 @@
 // src/renderer/renderTick.ts
 // SHARED rendering function — called by PreviewPlayer (Phase 1) AND GIF encoder Web Worker (Phase 2).
 // NEVER diverge these two paths. The signature must never change between phases.
-// Phase 2 will add TextFrame branch and transition logic without altering the function signature.
+// Phase 3 added TextFrame branch; transition compositing is handled by renderTransitionTick.
 
 import type { Frame } from '../types/frames';
 
 /**
  * Draw a single frame to a canvas context.
+ * Supports ImageFrame (letterboxed bitmap) and TextFrame (solid background + centered text).
  *
- * @param ctx   - 2D context from <canvas> (preview) or OffscreenCanvas (Phase 2 encoder)
- * @param frame - Current frame to render
+ * @param ctx   - 2D context from <canvas> (preview) or OffscreenCanvas (encoder worker)
+ * @param frame - Current frame to render (ImageFrame or TextFrame)
  * @param width - Canvas output width in pixels
  * @param height - Canvas output height in pixels
- * @param progress - Reserved for Phase 2 transitions (0.0–1.0, default 1.0 = no transition)
+ * @param progress - Used by renderTransitionTick callers for compositing (0.0–1.0, default 1.0)
  */
 export function renderTick(
   ctx: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D,
@@ -40,10 +41,30 @@ export function renderTick(
     );
   }
 
-  // Phase 2: add TextFrame branch
-  // Phase 2: add crossfade alpha blend using `progress` parameter
-  // Phase 2: add slide left/right using `progress` parameter
+  if (frame.type === 'text') {
+    // Fill background
+    ctx.fillStyle = frame.backgroundColor;
+    ctx.fillRect(0, 0, width, height);
 
-  // Suppress unused variable warning for progress until Phase 2
+    // Draw centered text scaled to output resolution
+    // fontSize is defined at 800px canvas width — scale proportionally
+    const scaledFontSize = Math.round(frame.fontSize * (width / 800));
+    ctx.fillStyle = frame.textColor;
+    ctx.font = `bold ${scaledFontSize}px sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    // Support multi-line text via newlines
+    const lines = frame.text.split('\n');
+    const lineHeight = scaledFontSize * 1.3;
+    const totalHeight = lines.length * lineHeight;
+    const startY = (height - totalHeight) / 2 + lineHeight / 2;
+
+    lines.forEach((line, i) => {
+      ctx.fillText(line, width / 2, startY + i * lineHeight);
+    });
+  }
+
+  // progress parameter is used by renderTransitionTick callers for compositing
   void progress;
 }
