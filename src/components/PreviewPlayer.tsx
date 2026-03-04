@@ -7,16 +7,24 @@
 //
 // Frame data is read from Zustand inside the tick ref via a stable getter to avoid
 // stale closures without restarting the rAF loop on every frame array change.
+//
+// Transitions: When settings.transitionType !== 'cut', an expanded sequence of render
+// functions is built that includes intermediate transition frames between each consecutive
+// content frame pair. The tick callback runs each function in sequence.
 
 import { useRef, useCallback, useState, useEffect } from 'react';
 import { Play, Pause, RotateCcw } from 'lucide-react';
 import { useFrameStore } from '../store/useFrameStore';
 import { renderTick } from '../renderer/renderTick';
+import { renderTransitionTick } from '../renderer/renderTransitionTick';
 import { useAnimationLoop } from '../hooks/useAnimationLoop';
 import type { Frame } from '../types/frames';
 
 const PREVIEW_WIDTH = 640;
 const PREVIEW_HEIGHT = 480;
+
+// A single render call in the expanded playback sequence.
+type ExpandedTick = (ctx: CanvasRenderingContext2D) => void;
 
 export function PreviewPlayer() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -29,6 +37,10 @@ export function PreviewPlayer() {
   const framesRef = useRef<Frame[]>([]);
   const frameDurationRef = useRef(800);
   const loopRef = useRef(true);
+  const transitionTypeRef = useRef<'cut' | 'crossfade' | 'slide-left' | 'slide-right'>('cut');
+
+  // Expanded sequence: one entry per content frame + N entries per transition pair
+  const expandedSequenceRef = useRef<ExpandedTick[]>([]);
 
   const { frames, settings, toggleLoop } = useFrameStore();
 
@@ -39,7 +51,32 @@ export function PreviewPlayer() {
   useEffect(() => {
     frameDurationRef.current = settings.frameDurationMs;
     loopRef.current = settings.loop;
+    transitionTypeRef.current = settings.transitionType;
   });
+
+  // Rebuild expanded sequence whenever frames or transitionType changes
+  useEffect(() => {
+    const TRANSITION_FRAMES = 4;
+    const ticks: ExpandedTick[] = [];
+    const transitionType = settings.transitionType;
+
+    for (let i = 0; i < frames.length; i++) {
+      const frame = frames[i];
+      const nextFrame = frames[i + 1];
+      ticks.push((ctx) => renderTick(ctx, frame, PREVIEW_WIDTH, PREVIEW_HEIGHT));
+      if (nextFrame && transitionType !== 'cut') {
+        for (let t = 1; t <= TRANSITION_FRAMES; t++) {
+          const progress = t / (TRANSITION_FRAMES + 1);
+          ticks.push((ctx) =>
+            renderTransitionTick(ctx, frame, nextFrame, PREVIEW_WIDTH, PREVIEW_HEIGHT, transitionType, progress)
+          );
+        }
+      }
+    }
+    expandedSequenceRef.current = ticks;
+    // Clamp frameIndex to new sequence length
+    frameIndexRef.current = Math.min(frameIndexRef.current, Math.max(0, ticks.length - 1));
+  }, [frames, settings.transitionType]);
 
   const tick = useCallback((timestamp: number) => {
     const canvas = canvasRef.current;
@@ -53,11 +90,13 @@ export function PreviewPlayer() {
     if (elapsed < frameDurationRef.current) return;
 
     lastFrameTimeRef.current = timestamp;
-    const frame = currentFrames[frameIndexRef.current];
-    renderTick(ctx, frame, PREVIEW_WIDTH, PREVIEW_HEIGHT);
+
+    const sequence = expandedSequenceRef.current;
+    if (sequence.length === 0) return;
+    sequence[frameIndexRef.current](ctx);
 
     const nextIndex = frameIndexRef.current + 1;
-    if (nextIndex >= currentFrames.length) {
+    if (nextIndex >= sequence.length) {
       if (loopRef.current) {
         frameIndexRef.current = 0;
       } else {
