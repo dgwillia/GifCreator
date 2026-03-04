@@ -22,12 +22,12 @@ See: .planning/PROJECT.md (updated 2026-02-26)
 
 ## Current Position
 
-Phase: 2 of 3 (Export and Settings) — COMPLETE
-Plan: Phase 2 complete (4/4 plans done). Starting Phase 3 — Title Cards and Transitions.
-Status: Phase 2 all plans verified complete. All 7 human verification steps passed for the export pipeline. Ready for Phase 3.
-Last activity: 2026-03-03 — Plan 02-04 complete — human verified all 7 export pipeline steps. Phase 2 done.
+Phase: 3 of 3 (Title Cards and Transitions) — IN PROGRESS
+Plan: Phase 3 — Plan 1/N done. Type and rendering foundation complete.
+Status: Phase 3 started. Plan 03-01 complete — type contracts and rendering foundation established.
+Last activity: 2026-03-04 — Plan 03-01 complete — transitionType union widened, text frame store actions added, TextFrame rendering branch and renderTransitionTick created.
 
-Progress: [███████░░░] 67%
+Progress: [████████░░] 70%
 
 ## Performance Metrics
 
@@ -54,6 +54,7 @@ Progress: [███████░░░] 67%
 | Phase 02-export-and-settings P02 | 1 | 2 tasks | 2 files |
 | Phase 02-export-and-settings P03 | 2 | 2 tasks | 4 files |
 | Phase 02-export-and-settings P04 | 0 | 1 task (human-verify) | 0 files |
+| Phase 03-title-cards-and-transitions P01 | 2 | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -84,6 +85,8 @@ Recent decisions affecting current work:
 - 02-03: Blob created from bytes.buffer cast as ArrayBuffer to satisfy BlobPart type constraint in strict TS
 - 02-04: Phase 2 export pipeline human-verified complete — all 7 verification steps passed (resolution presets, 500ms timing, loop on/off, progress bar, GIF download confirmed working)
 - 02-04: Known Safari < 17 limitation accepted — alert instead of export (intentional per research decision)
+- 03-01: transitionType default cast uses GifSettings['transitionType'] instead of 'cut' as const to prevent literal narrowing against the wider union
+- 03-01: renderTransitionTick uses module-level OffscreenCanvas singleton (scratchCanvas) to avoid GC pressure on each transition frame
 
 ### Pending Todos
 
@@ -97,6 +100,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-03
-Stopped at: Completed 02-04-PLAN.md — Phase 2 Export and Settings fully verified and complete. Phase 3 (Title Cards and Transitions) is next.
+Last session: 2026-03-04
+Stopped at: Completed 03-01-PLAN.md — Phase 3 type and rendering foundation established. transitionType union, text frame store actions, TextFrame rendering, and renderTransitionTick all in place.
 Resume file: None

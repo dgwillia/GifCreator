@@ -10,7 +10,7 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Frame Composition
 
 - [x] **COMP-01**: User can upload multiple images via drag-and-drop (PNG, JPG, WebP accepted)
-- [ ] **COMP-02**: User can add title card frames with a custom solid background color and text
+- [x] **COMP-02**: User can add title card frames with a custom solid background color and text
 - [x] **COMP-03**: User can reorder frames via drag-and-drop in the frame strip
 - [x] **COMP-04**: User can delete individual frames from the sequence
 
@@ -22,8 +22,8 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Transitions
 
 - [x] **TRAN-01**: User can select cut (instant) transition between frames
-- [ ] **TRAN-02**: User can select crossfade (alpha blend) transition between frames
-- [ ] **TRAN-03**: User can select slide left or slide right transition between frames
+- [x] **TRAN-02**: User can select crossfade (alpha blend) transition between frames
+- [x] **TRAN-03**: User can select slide left or slide right transition between frames
 
 ### Timing
 
@@ -83,14 +83,14 @@ Which phases cover which requirements. Updated during roadmap creation.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | COMP-01 | Phase 1 | Complete |
-| COMP-02 | Phase 3 | Pending |
+| COMP-02 | Phase 3 | Complete |
 | COMP-03 | Phase 1 | Complete |
 | COMP-04 | Phase 1 | Complete |
 | PREV-01 | Phase 1 | Complete |
 | PREV-02 | Phase 1 | Complete |
 | TRAN-01 | Phase 2 | Complete |
-| TRAN-02 | Phase 3 | Pending |
-| TRAN-03 | Phase 3 | Pending |
+| TRAN-02 | Phase 3 | Complete |
+| TRAN-03 | Phase 3 | Complete |
 | TIME-01 | Phase 2 | Complete |
 | TIME-02 | Phase 2 | Complete |
 | EXPO-01 | Phase 2 | Complete |
