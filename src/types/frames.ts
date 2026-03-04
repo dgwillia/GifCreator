@@ -1,6 +1,6 @@
 // src/types/frames.ts
 // Discriminated union frame model — single source of truth for all frame types.
-// TextFrame defined now to avoid rename refactor in Phase 3.
+// TextFrame defined in Phase 1 to avoid rename refactor in Phase 3.
 
 export interface ImageFrame {
   type: 'image';
@@ -26,7 +26,7 @@ export interface GifSettings {
   loop: boolean;
   outputWidth: number;        // Phase 2: default 800
   outputHeight: number;       // Phase 2: default 600
-  transitionType: 'cut';      // Phase 2: only 'cut' — Phase 3 adds 'crossfade' | 'slide-left' | 'slide-right'
+  transitionType: 'cut' | 'crossfade' | 'slide-left' | 'slide-right'; // Phase 3 widening from literal 'cut'
 }
 
 export const RESOLUTION_PRESETS = [

@@ -4,7 +4,7 @@
 
 import { create } from 'zustand';
 import { arrayMove } from '@dnd-kit/sortable';
-import type { Frame, GifSettings } from '../types/frames';
+import type { Frame, GifSettings, TextFrame } from '../types/frames';
 
 interface FrameStore {
   frames: Frame[];
@@ -18,6 +18,8 @@ interface FrameStore {
   toggleLoop: () => void;
   updateSettings: (patch: Partial<GifSettings>) => void;
   setExportProgress: (v: number | null) => void;
+  addTextFrame: (text: string, backgroundColor: string, textColor: string, fontSize: number) => void;
+  updateTextFrame: (id: string, patch: Partial<Pick<TextFrame, 'text' | 'backgroundColor' | 'textColor' | 'fontSize'>>) => void;
 }
 
 export const useFrameStore = create<FrameStore>((set) => ({
@@ -29,7 +31,7 @@ export const useFrameStore = create<FrameStore>((set) => ({
     loop: true,
     outputWidth: 800,
     outputHeight: 600,
-    transitionType: 'cut' as const,
+    transitionType: 'cut' as GifSettings['transitionType'],
   },
 
   addFrames: (newFrames) =>
@@ -67,4 +69,24 @@ export const useFrameStore = create<FrameStore>((set) => ({
     set((state) => ({ settings: { ...state.settings, ...patch } })),
 
   setExportProgress: (v) => set({ exportProgress: v }),
+
+  addTextFrame: (text, backgroundColor, textColor, fontSize) =>
+    set((state) => {
+      const frame: TextFrame = {
+        type: 'text' as const,
+        id: crypto.randomUUID(),
+        text,
+        backgroundColor,
+        textColor,
+        fontSize,
+      };
+      return { frames: [...state.frames, frame] };
+    }),
+
+  updateTextFrame: (id, patch) =>
+    set((state) => ({
+      frames: state.frames.map((f) =>
+        f.type === 'text' && f.id === id ? { ...f, ...patch } : f,
+      ),
+    })),
 }));

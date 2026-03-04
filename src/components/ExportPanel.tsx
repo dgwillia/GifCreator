@@ -4,6 +4,7 @@
 
 import { useFrameStore } from '../store/useFrameStore';
 import { RESOLUTION_PRESETS } from '../types/frames';
+import type { GifSettings } from '../types/frames';
 import { Download, Loader2 } from 'lucide-react';
 import GifWorker from '../workers/gifWorker.ts?worker';
 import type { WorkerOutgoing } from '../workers/gifWorker.types';
@@ -34,7 +35,7 @@ export function ExportPanel() {
   }
 
   function handleTransitionChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    updateSettings({ transitionType: e.target.value as 'cut' });
+    updateSettings({ transitionType: e.target.value as GifSettings['transitionType'] });
   }
 
   async function handleExport() {
